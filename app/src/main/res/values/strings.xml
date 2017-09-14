@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DuniyaMovies</string>
+    <string name="highest_rated">Highest Rated</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="favorites">Favorites</string>
+    <string name="detail_image">Detail Image</string>
+    <string name="image_icon">Image Icon</string>
+    <string name="add_favorite">Add Favorite</string>
+    <string name="review_label">Review</string>
+    <string name="spinner_title">Trailers-></string>
+</resources>
