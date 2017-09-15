@@ -28,7 +28,7 @@ public class DuniyaMoviesDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         // Remove before submission
-        final String DROP_TABLE = "DROP TABLE IF EXISTS " + DuniyaMoviesDbContract.DuniyaMovieFavoritesEntry.TABLE_NAME;
+        //final String DROP_TABLE = "DROP TABLE IF EXISTS " + DuniyaMoviesDbContract.DuniyaMovieFavoritesEntry.TABLE_NAME;
 
         final String CREATE_TABLE = "CREATE TABLE "  +
                 DuniyaMoviesDbContract.DuniyaMovieFavoritesEntry.TABLE_NAME + " (" +
@@ -41,7 +41,7 @@ public class DuniyaMoviesDbHelper extends SQLiteOpenHelper {
                 DuniyaMoviesDbContract.DuniyaMovieFavoritesEntry.COLUMN_RELEASE_DATE+ " STRING NOT NULL," +
                 " UNIQUE (" + DuniyaMoviesDbContract.DuniyaMovieFavoritesEntry.COLUMN_MOVIE_ID +"));";
 
-        sqLiteDatabase.execSQL(DROP_TABLE);
+        //sqLiteDatabase.execSQL(DROP_TABLE);
         sqLiteDatabase.execSQL(CREATE_TABLE);
     }
 

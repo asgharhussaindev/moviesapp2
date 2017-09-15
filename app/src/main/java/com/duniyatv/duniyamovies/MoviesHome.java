@@ -38,7 +38,7 @@ public class MoviesHome extends AppCompatActivity {
     private static final String RATING_TAG = "vote_average";
     private static final String TITLE_TAG = "title";
     private static final String MOVIE_ID_TAG = "id";
-    private static final String THEMOVIEDB_API_KEY = "dummy";
+    private static final String THEMOVIEDB_API_KEY = "ead3651307bf4b97537bac36c5cdd8c6";
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -46,6 +46,13 @@ public class MoviesHome extends AppCompatActivity {
 
     // Constants for logging and referring to a unique loader
     private static final String TAG = MoviesHome.class.getSimpleName();
+
+    private static final String SORTED_BY_MOST_POPULAR = "mostPopular";
+    private static final String SORTED_BY_HIGHEST_RATED = "highestRated";
+    private static final String SORTED_BY_FAVORITES = "favorites";
+    private static final String SORT_STATE_KEY = "SORTED_BY";
+
+    private String currentSortState = "mostPopular";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +66,30 @@ public class MoviesHome extends AppCompatActivity {
         layoutManager = new GridLayoutManager(context, 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        // If network connectivity is not present, then show a toast and stop else continue
+        // If network connectivity is not present, then show a toast and stop, else continue
         if (!isNetworkConnected(context)){
             showNoNetworkToast(this);
         }
         else {
-            setMoviesByPopularity(context);
+            if (savedInstanceState != null){
+                Log.d("SAVEDINSTANCE", "onCreate savedInstanceState != null");
+                String state = savedInstanceState.getString(SORT_STATE_KEY);
+                Log.d("SAVEDINSTANCE", "onCreate state = " + state);
+                if (state.equals(SORTED_BY_HIGHEST_RATED)){
+                    currentSortState = SORTED_BY_HIGHEST_RATED;
+                    setMoviesByRating(context);
+                } else if (state.equals(SORTED_BY_FAVORITES)){
+                    currentSortState = SORTED_BY_FAVORITES;
+                    setMoviesByFavorites(context);
+                } else{
+                    currentSortState = SORTED_BY_MOST_POPULAR;
+                    setMoviesByPopularity(context);
+                }
+            } else {
+                Log.d("SAVEDINSTANCE", "onCreate savedInstanceState = null");
+                currentSortState = SORTED_BY_MOST_POPULAR;
+                setMoviesByPopularity(context);
+            }
         }
     }
 
@@ -81,19 +106,32 @@ public class MoviesHome extends AppCompatActivity {
             case R.id.highest_rated:
                 Toast.makeText(getApplicationContext(),"Highest Rated Selected",Toast.LENGTH_LONG).show();
                 setMoviesByRating(this);
+                this.currentSortState=SORTED_BY_HIGHEST_RATED;
+                Log.d("SAVEDINSTANCE", "selected currentSortState = " + currentSortState);
                 return true;
             case R.id.most_popular:
                 Toast.makeText(getApplicationContext(),"Most Popular Selected",Toast.LENGTH_LONG).show();
                 setMoviesByPopularity(this);
+                this.currentSortState=SORTED_BY_MOST_POPULAR;
+                Log.d("SAVEDINSTANCE", "selected currentSortState = " + currentSortState);
                 return true;
             case R.id.favorites:
                 //Toast.makeText(getApplicationContext(), "Favorites Selected", Toast.LENGTH_LONG).show();
                 setMoviesByFavorites(this);
+                this.currentSortState=SORTED_BY_FAVORITES;
+                Log.d("SAVEDINSTANCE", "selected currentSortState = " + currentSortState);
                 return true;
             default:
                 super.onOptionsItemSelected(item);
         }
         return returnStatement;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.d("SAVEDINSTANCE", "saving currentSortState = " + currentSortState);
+        outState.putString(SORT_STATE_KEY, currentSortState);
+        super.onSaveInstanceState(outState);
     }
 
     private void setMoviesByRating(final Context context){
