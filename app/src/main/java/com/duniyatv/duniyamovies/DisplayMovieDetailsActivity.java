@@ -40,7 +40,7 @@ public class DisplayMovieDetailsActivity extends AppCompatActivity {
     private static final String RELEASE_DATE_HEADING = "RELEASE DATE: ";
     private static final String REVIEW_ID_TAG = "content";
     private static final String TRAILER_KEY_TAG = "key";
-    private static final String THEMOVIEDB_API_KEY = "ead3651307bf4b97537bac36c5cdd8c6";
+    private static final String THEMOVIEDB_API_KEY = "dummy";
     private static final String GREY_LINE_COLOR ="#BDBDBD";
 
     Movie movie;

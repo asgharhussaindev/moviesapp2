@@ -38,7 +38,7 @@ public class MoviesHome extends AppCompatActivity {
     private static final String RATING_TAG = "vote_average";
     private static final String TITLE_TAG = "title";
     private static final String MOVIE_ID_TAG = "id";
-    private static final String THEMOVIEDB_API_KEY = "ead3651307bf4b97537bac36c5cdd8c6";
+    private static final String THEMOVIEDB_API_KEY = "dummy";
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
